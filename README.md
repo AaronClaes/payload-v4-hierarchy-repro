@@ -83,7 +83,7 @@ In the admin: start it with `REPRO_JOIN_LIMIT=10 pnpm dev`, open a tag's edit vi
 
 This script raises the join's `defaultLimit` to 10 (`REPRO_JOIN_LIMIT`), because deleting a tag otherwise runs into problem 1 first.
 
-## 4. Hierarchy can't find `useAsTitle` inside the first of several unnamed tabs
+## 4. Hierarchy can't find `useAsTitle` inside tabs
 
 ```bash
 pnpm repro:title-in-tabs
@@ -93,7 +93,7 @@ pnpm repro:title-in-tabs
 Error: The hierarchy title field "name" was not found. It cannot be nested within named fields i.e. named groups, named tabs, etc.
 ```
 
-`Sections` has `useAsTitle: 'name'`, and `name` sits in the first of two unnamed tabs, which the error message says is allowed. In `hierarchy/utils/findUseAsTitle.ts`, the search into the second tab (which has no `name`) throws instead of returning nothing, so the match in the first tab is never used. The collection is only added with `REPRO_TITLE_IN_TABS=1`, so the other scripts can boot.
+`Sections` has `useAsTitle: 'name'`, and `name` sits in one of two unnamed tabs, which the error message says is allowed. In `hierarchy/utils/findUseAsTitle.ts`, searching the tab without `name` throws instead of returning nothing, so the match in the other tab is never used. Swapping the tab order gives the same error. The collection is only added with `REPRO_TITLE_IN_TABS=1`, so the other scripts can boot.
 
 ## Versions
 
